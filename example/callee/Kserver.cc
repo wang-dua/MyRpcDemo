@@ -1,18 +1,24 @@
-/*
-Kserver 是服务端的主文件, 服务端收到客户端的消息, 处理业务返回客户端
 
-KrpcApplication 负责全局初始化（读配置、初始化日志/网络、设置本机地址等
-
-KrpcProvider 负责服务导出与请求分发（监听端口、注册服务、收到请求后反射式查找(服务名+方法名查找对应的虚函数)并调用目标方法
-
-
-*/
 #include <iostream>
 #include <string>
 #include "../user.pb.h"
 #include "Krpcapplication.h" 
 #include "Krpcprovider.h"
-//继承user.pb.h中的UserServiceRpc类
+
+
+/*
+Kserver 是服务端的主文件, 体现在UserService中, 自己写的服务类继承自user.pb.h中的UserServiceRpc类
+
+KrpcApplication 负责全局初始化（读配置、初始化日志/网络、设置本机地址等
+
+KrpcProvider 负责服务导出与请求分发（监听端口、注册服务、收到请求后反射式查找(服务名+方法名查找对应的虚函数)并调用目标方法
+*/
+
+
+/*
+protobuf继承关系
+google::protobuf::Service  <- UserServiceRpc (protoc生成) <- UserService (写的具体业务类)
+*/
 class UserService: public Kuser::UserServiceRpc
 {
 public:
@@ -52,10 +58,11 @@ public:
 };
 
 int main(int argc, char **argv){
-    KrpcApplication::Init(argc, argv);
-    KrpcProvider provider;
+    KrpcApplication::Init(argc, argv); //全局框架初始化
+    KrpcProvider provider;  //KrpcProvider是网络服务, 将用户服务UserService发布到rpc节点
     provider.NotifyService(new UserService());
 
+    //启动一个rpc服务发布节点, 进程阻塞, 等待rpc的调用请求
     provider.Run();
     return 0;
 }
