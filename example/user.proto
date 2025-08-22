@@ -1,0 +1,37 @@
+syntax = "proto3";
+package Kuser;
+/*
+生成基于 google::protobuf::Service 的 抽象接口类，可以继承并实现它
+手动实现rpc需要设置为true
+这种 cc_generic_services 生成的类，本质上只是一个“抽象服务接口”，并没有网络传输层，必须自己写 RPC 框架去调度
+*/
+option cc_generic_services = true;
+
+message ResultCode {
+    int32 errcode = 1;
+    bytes errmsg = 2;
+}
+
+message LoginRequest {
+    bytes name = 1;
+    bytes pwd = 2;
+}
+message LoginResponse {
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+message RegisterRequest {
+    uint32 id = 1;
+    bytes name = 2;
+    bytes pwd = 3;
+}
+message RegisterResponse {
+    ResultCode result = 1;
+    bool success = 2;
+}
+
+service UserServiceRpc{
+    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+}
