@@ -12,22 +12,22 @@ KrpcApplication 负责全局初始化 读配置、初始化日志/网络、设�
 class KrpcApplication
 {
 private:
-    KrpcApplication();
-    ~KrpcApplication();
-    KrpcApplication(const KrpcApplication&) = delete;
-    KrpcApplication(KrpcApplication&&) = delete;
+    KrpcApplication() = default;
+    ~KrpcApplication() = default;
+    KrpcApplication(const KrpcApplication &) = delete;
+    KrpcApplication(KrpcApplication &&) = delete;
 
 private:
-    static KrpcConfig m_config; //承载配置, 如监听地址、端口、注册中心/日志配置等
-    static KrpcApplication* m_application; //单例模式
+    static KrpcConfig m_config;            // 承载配置, 如监听地址、端口、注册中心/日志配置等
+    static KrpcApplication *m_application; // 单例模式
     static std::mutex m_mutex;
 
 public:
- //Init方法使用Krpcchannel, Krpccontroller 对“客户端通道”“控制器”做全局初始化
-    static void Init(int argc, char** argv);
-    static KrpcApplication& GetInstance(); //使用实例
-    static void deleteInstance(); //删除实例
-    static KrpcConfig& GetConfig();
+    // Init方法使用Krpcchannel, Krpccontroller 对“客户端通道”“控制器”做全局初始化
+    static void Init(int argc, char **argv);
+    static KrpcApplication &GetInstance(); // 使用实例
+    static void deleteInstance();          // 删除实例
+    static KrpcConfig &GetConfig();
 };
 
 #endif
