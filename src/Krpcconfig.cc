@@ -24,7 +24,7 @@ void KrpcConfig::LoadConfigFile(const char *config_file)
         
         //取前半部分key
         int index = read_buf.find('='); //index is position of '='
-        if (index = -1) continue;
+        if (index == -1) continue;
         std::string key = read_buf.substr(0, index); //substr(start, len)
         Trim(key);
 
@@ -47,16 +47,17 @@ std::string KrpcConfig::Load(const std::string &key)
     return it->second;
 }
 
-//去除字符串前后空格
+//去除字符串前后空格             XXXX rpcserver = 1.1.1.1 XXX
 void KrpcConfig::Trim(std::string &read_buf)
 {
-    int index = read_buf.find_first_not_of(' ');
+    //去掉字符串前面空格  rpcserver =  1.1.1.1 XXX
+    int index = read_buf.find_first_not_of(' '); //从前找第一个非空格
     if (index != -1){
         read_buf = read_buf.substr(index, read_buf.size() - index);
     }
 
-    // 去掉字符串后面的空格
-    index = read_buf.find_last_not_of(' ');
+    // 去掉字符串后面的空格  
+    index = read_buf.find_last_not_of(' '); //从后找第一个非空格
     if (index != -1) {  // 如果找到非空格字符
         read_buf = read_buf.substr(0, index + 1);  // 截取字符串
     }

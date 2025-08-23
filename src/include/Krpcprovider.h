@@ -1,7 +1,7 @@
 #ifndef _Krpcprovider_H__
 #define _Krpcprovider_H__
 
-//service.h中包含基类Seevice
+//service.h中包含基类Service
 #include "google/protobuf/service.h"
 //描述符, 服务描述符/方法描述符
 #include <google/protobuf/descriptor.h> 
