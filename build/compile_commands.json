@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o src/CMakeFiles/krpc_core.dir/Krpcapplication.cc.o -c /root/projects/MyRpcDemo/src/Krpcapplication.cc",
+  "file": "/root/projects/MyRpcDemo/src/Krpcapplication.cc"
+},
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o src/CMakeFiles/krpc_core.dir/Krpcconfig.cc.o -c /root/projects/MyRpcDemo/src/Krpcconfig.cc",
+  "file": "/root/projects/MyRpcDemo/src/Krpcconfig.cc"
+},
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o src/CMakeFiles/krpc_core.dir/Krpcheader.pb.cc.o -c /root/projects/MyRpcDemo/src/Krpcheader.pb.cc",
+  "file": "/root/projects/MyRpcDemo/src/Krpcheader.pb.cc"
+},
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o src/CMakeFiles/krpc_core.dir/Krpcprovider.cc.o -c /root/projects/MyRpcDemo/src/Krpcprovider.cc",
+  "file": "/root/projects/MyRpcDemo/src/Krpcprovider.cc"
+}
+]

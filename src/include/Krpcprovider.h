@@ -49,9 +49,9 @@ private:
     std::unordered_map<std::string, ServiceInfo> service_map;
     
     //客户端连接(断开), 收到客户端消息, 向客户端发送RPC回应 的处理
-    void Onconnection();
-    void OnMessage();
-    void SendRpcResponse();
+    void OnConnection(const muduo::net::TcpConnectionPtr& conn);
+    void OnMessage(const muduo::net::TcpConnectionPtr& conn, muduo::net::Buffer* buffer, muduo::Timestamp receive_time);
+    void SendRpcResponse(const muduo::net::TcpConnectionPtr& conn, google::protobuf::Message* response);
 };
 
 #endif

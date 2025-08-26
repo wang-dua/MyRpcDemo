@@ -38,6 +38,7 @@ public:
      * LoginResponse* 由服务端处理的业务
      * Closure* done 
      */
+    //Login 重写了基类的Login
     void Login(::google::protobuf::RpcController* controller,
               const ::Kuser::LoginRequest* request,
               ::Kuser::LoginResponse* response,
@@ -46,7 +47,8 @@ public:
                 std::string name = request->name();
                 std::string pwd = request->pwd();
 
-                bool login_result = Login(name, pwd);
+                //
+                bool login_result = Login(name, pwd); 
 
                 Kuser::ResultCode* code = response->mutable_result();
                 code->set_errcode(0);

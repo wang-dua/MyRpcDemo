@@ -15,7 +15,7 @@ class KrpcConfig
 public:
     // LoadConfigFile 负责配置文件
     void LoadConfigFile(const char *config_file);
-    std::string Load(const std::string &key); // 从配置文件取值
+    std::string Load(const std::string &key); // 直接从配置文件取值
 private:
     std::unordered_map<std::string, std::string> config_map; // 存储每一行的key value
     void Trim(std::string &read_buf);                        // 格式纠正

@@ -49,7 +49,9 @@ KrpcApplication &KrpcApplication::GetInstance()
 }
 void KrpcApplication::deleteInstance()
 {
-    if (m_application)  delete m_application; //调用析构
+    if (m_application){
+        delete m_application; //调用析构
+    }
 }
 KrpcConfig &KrpcApplication::GetConfig()
 {

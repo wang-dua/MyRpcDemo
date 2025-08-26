@@ -20,7 +20,13 @@ public:
     void Create(const char* path, const char* data, int datalen, int state = 0);
     std::string GetData(const char* path);
 private:
-    zhandle_t* m_zhandle;
+
+/**
+ * m_zhandle 可以理解为zookeeper客户端的实例对象, 代表一个和 ZooKeeper 服务器的会话；
+ * 持有网络连接、会话状态、watcher 回调；所有 API 都要基于它调用；
+ * 最后要用 zookeeper_close 来销毁。
+ */
+    zhandle_t* m_zhandle; 
 };
 
 #endif

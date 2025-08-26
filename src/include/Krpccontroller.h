@@ -9,21 +9,22 @@
  * 负责记录调用是否失败、失败原因，以及是否被取消。
  */
 
-class KrpcController: public google::protobuf::RpcController{
+class KrpcController : public google::protobuf::RpcController
+{
 public:
     KrpcController();
     void Reset();
     bool Failed() const;
     std::string ErrorText() const;
-    void SetFailed(const std::string& reason);
+    void SetFailed(const std::string &reason);
 
     void StartCancel();
     bool IsCanceled() const;
-    void NotifyOnCancel(google::protobuf::Closure* callback);
+    void NotifyOnCancel(google::protobuf::Closure *callback);
+
 private:
     bool m_failed;
     std::string m_errText;
-
- };
+};
 
 #endif
