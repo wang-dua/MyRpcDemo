@@ -3,11 +3,3 @@
 2. google::protobuf::MethodDescriptor 方法描述符，告诉你“这个服务里有哪些方法”。
 3. google::protobuf::RpcController 控制 RPC 的错误状态、是否成功 ....    等等
 muduo用于网络层, glog写日志, zookeeper用于客户端服务端互相寻找
-
-# ./src/include, 这是全部的头文件, 包含了框架的全部方法
-## 服务器:
-1. Krpcapplication.h:　框架初始化　
-
-#include "Krpcconfig.h"
-#include "Krpcchannel.h" 
-#include  "Krpccontroller.h"

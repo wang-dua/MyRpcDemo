@@ -1,8 +1,8 @@
 #include "Krpcconfig.h"
+#include "KrpcLogger.h"
 #include "memory" //智能指针
-
 /**
- * 处理配置文件
+ * 处理配置文件, 将配置信息放入config_map, 使用Load方法用于从key取出value
  */
 
 //将配置文件加载到config_map
@@ -10,7 +10,10 @@ void KrpcConfig::LoadConfigFile(const char *config_file)
 {
     //unique_ptr 管理FILE类型变量, 自定义使用fclose()销毁对象, decltype是类型推导
     std::unique_ptr<FILE, decltype(&fclose)> pf(fopen(config_file, "r"), &fclose);
-    if (pf == nullptr) exit(EXIT_FAILURE);
+    if (pf == nullptr){
+        KrpcLogger::Error("Open config_file failed!");
+        exit(EXIT_FAILURE);
+    }
     //获取每一行内容的指针, 其中智能指针的get()返回管理对象的原始指针(并非智能指针)
     char buf[1024];
     while (fgets(buf, 1024, pf.get()) != nullptr) 
@@ -29,12 +32,13 @@ void KrpcConfig::LoadConfigFile(const char *config_file)
         Trim(key);
 
         //去后半部分value
-        int endindex = read_buf.find('\n', index); // start from position index
-        std::string value = read_buf.substr(index + 1, endindex - index -1);
+        //int endindex = read_buf.find('\n', index); // start from position index
+        std::string value = read_buf.substr(index + 1);
         Trim(value);
 
         //写入unordered_map
-        config_map.insert({key, value});
+        //config_map.insert({key, value});
+        config_map[key] = value; //可以覆盖原值
     }
     
 }
@@ -52,13 +56,13 @@ void KrpcConfig::Trim(std::string &read_buf)
 {
     //去掉字符串前面空格  rpcserver =  1.1.1.1 XXX
     int index = read_buf.find_first_not_of(' '); //从前找第一个非空格
-    if (index != -1){
+    if (index != std::string::npos){
         read_buf = read_buf.substr(index, read_buf.size() - index);
     }
 
     // 去掉字符串后面的空格  
     index = read_buf.find_last_not_of(' '); //从后找第一个非空格
-    if (index != -1) {  // 如果找到非空格字符
+    if (index != std::string::npos) {  // 如果找到非空格字符
         read_buf = read_buf.substr(0, index + 1);  // 截取字符串
     }
 }

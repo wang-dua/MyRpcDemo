@@ -4,6 +4,10 @@
 #include "KrpcLogger.h"
 #include <condition_variable>
 
+/**
+ * 创建zookeeper客户端, 定义创建节点, 定义从节点获取数据
+ */
+
 std::mutex cv_mutex;
 std::condition_variable cv;
 bool is_connected = false;

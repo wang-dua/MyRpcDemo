@@ -6,7 +6,7 @@ KrpcConfig KrpcApplication::m_config;
 std::mutex KrpcApplication::m_mutex;
 KrpcApplication* KrpcApplication::m_application = nullptr; //单例指针
 /**
- * Init 获取main中的参数, 得到配置文件路径, 加载配置文件
+ * Init 获取main中的参数, 得到配置文件路径, 加载配置文件, 文件存放ip port信息
  * GetInstance deleteinstance 获取删除实例
  * GetConfig 配置
  */
@@ -24,17 +24,17 @@ void KrpcApplication::Init(int argc, char **argv){
         case 'i'://optarg是全局变量, 存储了-i后面的参数(filepath)
             config_file = optarg; 
             break;
-        case '?':// 未知参数(非-i)
-            std::cout << "Command: command -i <configFilePath>" << std::endl;
-            exit(EXIT_FAILURE);
-            break;
-        case ':'://-i后没有参数
-            std::cout << "Command: command -i <configFilePath>" << std::endl;
+        case '?'://未知选项 or 缺少参数 
+             std::cerr << "Usage: " << argv[0] << " -i <configFilePath>" << std::endl;
             exit(EXIT_FAILURE);
             break;
         default:
             break;
         }
+    }
+    if (config_file.empty()) {
+        std::cerr << "You must specify a config file with -i" << std::endl;
+        exit(EXIT_FAILURE);
     }
     m_config.LoadConfigFile(config_file.c_str()); //Krpcconfig.h中的LoadConfigFile
 }
@@ -51,9 +51,10 @@ void KrpcApplication::deleteInstance()
 {
     if (m_application){
         delete m_application; //调用析构
+        m_application = nullptr;
     }
 }
-KrpcConfig &KrpcApplication::GetConfig()
+KrpcConfig& KrpcApplication::GetConfig()
 {
     return m_config; //KrpcConfig m_config
 }
