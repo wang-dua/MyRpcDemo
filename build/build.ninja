@@ -84,6 +84,13 @@ build src/CMakeFiles/krpc_core.dir/Krpcapplication.cc.o: CXX_COMPILER__krpc_core
   OBJECT_DIR = src/CMakeFiles/krpc_core.dir
   OBJECT_FILE_DIR = src/CMakeFiles/krpc_core.dir
 
+build src/CMakeFiles/krpc_core.dir/Krpcchannel.cc.o: CXX_COMPILER__krpc_core_Debug /root/projects/MyRpcDemo/src/Krpcchannel.cc || cmake_object_order_depends_target_krpc_core
+  DEP_FILE = src/CMakeFiles/krpc_core.dir/Krpcchannel.cc.o.d
+  FLAGS = -g -std=c++11 -Wall -std=gnu++11
+  INCLUDES = -I/root/projects/MyRpcDemo/src/include
+  OBJECT_DIR = src/CMakeFiles/krpc_core.dir
+  OBJECT_FILE_DIR = src/CMakeFiles/krpc_core.dir
+
 build src/CMakeFiles/krpc_core.dir/Krpcconfig.cc.o: CXX_COMPILER__krpc_core_Debug /root/projects/MyRpcDemo/src/Krpcconfig.cc || cmake_object_order_depends_target_krpc_core
   DEP_FILE = src/CMakeFiles/krpc_core.dir/Krpcconfig.cc.o.d
   FLAGS = -g -std=c++11 -Wall -std=gnu++11
@@ -127,7 +134,7 @@ build src/CMakeFiles/krpc_core.dir/zookeeperutil.cc.o: CXX_COMPILER__krpc_core_D
 #############################################
 # Link the static library src/libkrpc_core.a
 
-build src/libkrpc_core.a: CXX_STATIC_LIBRARY_LINKER__krpc_core_Debug src/CMakeFiles/krpc_core.dir/Krpcapplication.cc.o src/CMakeFiles/krpc_core.dir/Krpcconfig.cc.o src/CMakeFiles/krpc_core.dir/Krpccontroller.cc.o src/CMakeFiles/krpc_core.dir/Krpcheader.pb.cc.o src/CMakeFiles/krpc_core.dir/Krpcprovider.cc.o src/CMakeFiles/krpc_core.dir/zookeeperutil.cc.o
+build src/libkrpc_core.a: CXX_STATIC_LIBRARY_LINKER__krpc_core_Debug src/CMakeFiles/krpc_core.dir/Krpcapplication.cc.o src/CMakeFiles/krpc_core.dir/Krpcchannel.cc.o src/CMakeFiles/krpc_core.dir/Krpcconfig.cc.o src/CMakeFiles/krpc_core.dir/Krpccontroller.cc.o src/CMakeFiles/krpc_core.dir/Krpcheader.pb.cc.o src/CMakeFiles/krpc_core.dir/Krpcprovider.cc.o src/CMakeFiles/krpc_core.dir/zookeeperutil.cc.o
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = src/CMakeFiles/krpc_core.dir
   POST_BUILD = :
