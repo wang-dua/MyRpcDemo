@@ -208,6 +208,7 @@ void KrpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::ne
      * 三参: 反序列化的请求, 即客户端调用方法而发送的数据
      * 四参: 空的响应对象，业务逻辑会往里填数据
      * 五参: 当done->Run(), 会执行this->SendRpcResponse()
+     * 把响应发送动作（SendRpcResponse）抽象为一个 done 回调交给业务逻辑, 业务逻辑可以决定是马上执行（同步）还是等异步操作完成后再执行（异步）
      */
     service->CallMethod(method, nullptr, request, response, done);
     delete request;

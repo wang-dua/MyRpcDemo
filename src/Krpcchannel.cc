@@ -157,7 +157,7 @@ bool KrpcChannel::newConnect(const char *ip, uint16_t port)
     return true;
 }
 
-//
+//根据路径从节点获取服务的ip的port
 std::string KrpcChannel::QueryServiceHost(ZkClient *zkclient, std::string service_name, std::string method_name, int &idx)
 {
     std::string method_path = "/" + service_name + "/" + method_name;
