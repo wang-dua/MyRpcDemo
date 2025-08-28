@@ -18,14 +18,16 @@ void KrpcProvider::NotifyService(google::protobuf::Service *service)
     const google::protobuf::ServiceDescriptor *psd = service->GetDescriptor();
     std::string service_name = psd->name();
     int method_count = psd->method_count();
-    KrpcLogger::Info("service name: " + service_name);
+    //KrpcLogger::Info("service name: " + service_name);
+    LOG(INFO) << "service_name: " << service_name;
 
     // 将服务的每个方法存入  service_info.method_map  方法名字:方法描述符
     for (int i = 0; i < method_count; i++)
     {
         const google::protobuf::MethodDescriptor *pmd = psd->method(i);
         std::string method_name = pmd->name();
-        KrpcLogger::Info("method name: " + method_name);
+        //KrpcLogger::Info("method name: " + method_name);
+        LOG(INFO) << "method name: " << method_name;
         service_info.method_map.emplace(method_name, pmd);
     }
     // servcie_map:  服务名字:服务信息(服务名字, 服务的方法)
@@ -36,7 +38,8 @@ void KrpcProvider::NotifyService(google::protobuf::Service *service)
 KrpcProvider::~KrpcProvider()
 {
     // std::cout << "~KrpcProvider()" << std::endl;
-    KrpcLogger::Info("~KrpcProvider");
+    //KrpcLogger::Info("~KrpcProvider");
+    LOG(INFO) << "~KrpcProvider";
     event_loop.quit(); // 退出事件循环
 }
 
@@ -96,7 +99,8 @@ void KrpcProvider::Run()
         }
     }
     // std::cout << "RpcProvider start service at ip: " << ip << "   port: " << port << std::endl;
-    KrpcLogger::Info("RpcProvider start service at ip: " + ip + "   port: " + std::to_string(port));
+    //KrpcLogger::Info("RpcProvider start service at ip: " + ip + "   port: " + std::to_string(port));
+    LOG(INFO) << "RpcProvider start service at ip:port " << ip << ":" << port;
     server->start();
     event_loop.loop();
 }
@@ -107,11 +111,13 @@ void KrpcProvider::OnConnection(const muduo::net::TcpConnectionPtr &conn)
 {
     if (conn->connected())
     {
-        KrpcLogger::Info("New connection: " + conn->peerAddress().toIpPort());
+        //KrpcLogger::Info("New connection: " + conn->peerAddress().toIpPort());
+        LOG(INFO) << "New connection: " << conn->peerAddress().toIpPort();
     }
     else
     {
-        KrpcLogger::Info("Connection closed: " + conn->peerAddress().toIpPort());
+        //KrpcLogger::Info("Connection closed: " + conn->peerAddress().toIpPort());
+        LOG(INFO) << "Connection closed: " << conn->peerAddress().toIpPort();
     }
 }
 
@@ -122,7 +128,8 @@ void KrpcProvider::OnConnection(const muduo::net::TcpConnectionPtr &conn)
 void KrpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::net::Buffer *buffer, muduo::Timestamp receive_time)
 {
     // std::cout << "OnMessage" << std::endl;
-    KrpcLogger::Info("OnMessage");
+    //KrpcLogger::Info("OnMessage");
+    LOG(INFO) << "OnMessage";
     // 取出buffer作为string并清空buffer
     std::string recv_buf = buffer->retrieveAllAsString();
 
@@ -152,7 +159,8 @@ void KrpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::ne
     }
     else
     {
-        KrpcLogger::Error("krpcHeader parse error");
+        //KrpcLogger::Error("krpcHeader parse error");
+        LOG(INFO) << "krpcheader parse error";
         return;
     }
 
@@ -161,7 +169,8 @@ void KrpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::ne
     bool read_args_success = coded_input.ReadString(&args_str, args_size);
     if (!read_args_success)
     {
-        KrpcLogger::Error("read args error");
+        //KrpcLogger::Error("read args error");
+        LOG(ERROR) << "read args error";
         return;
     }
 
@@ -173,14 +182,16 @@ void KrpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::ne
     if (it == service_map.end())
     {
         // std::cout << service_name << " is not exits!" << std::endl;
-        KrpcLogger::Error(service_name + " is not exits!");
+        //KrpcLogger::Error(service_name + " is not exits!");
+        LOG(ERROR) << service_name << "is not exits!";
         return;
     }
     auto mit = it->second.method_map.find(method_name);
     if (mit == it->second.method_map.end())
     {
         // std::cout << service_name << "." << method_name << " is not exits!" << std::endl;
-        KrpcLogger::Error(service_name + "." + method_name + " is not exits!");
+        //KrpcLogger::Error(service_name + "." + method_name + " is not exits!");
+        LOG(ERROR) << service_name << "." << method_name << " is not exits!";
         return;
     }
     google::protobuf::Service *service = it->second.service;
@@ -191,7 +202,8 @@ void KrpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::ne
     if (!request->ParseFromString(args_str))
     { // 反序列化参数
         // std::cout << service_name << "." << method_name << " parse error!" << std::endl;
-        KrpcLogger::Error(service_name + "." + method_name + " parsefromstring error!");
+        //KrpcLogger::Error(service_name + "." + method_name + " parsefromstring error!");
+        LOG(ERROR) << service_name << "." << method_name << " parsefromstring error!";
         return;
     }
 
@@ -224,7 +236,8 @@ void KrpcProvider::SendRpcResponse(const muduo::net::TcpConnectionPtr &conn, goo
     else
     {
         // std::cout << "serialize error!" << std::endl;
-        KrpcLogger::Error("serialize error!");
+        //KrpcLogger::Error("serialize error!");
+        LOG(ERROR) << "serialize error!";
     }
     delete response;
 }

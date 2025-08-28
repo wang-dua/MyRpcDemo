@@ -41,6 +41,7 @@ void ZkClient::Start()
     std::string host = KrpcApplication::GetInstance().GetConfig().Load("zookeeperip");
     std::string port = KrpcApplication::GetInstance().GetConfig().Load("zookeeperport");
     std::string connstr = host + ":" + port;
+    LOG(INFO) << "zookeeper connstr = " << connstr;
 
     /**
      * 初始化zookeeper客户端, 第2参为全局 watcher，用于接收会话事件
@@ -48,7 +49,8 @@ void ZkClient::Start()
      */
     m_zhandle = zookeeper_init(connstr.c_str(), global_watcher, 6000, nullptr, nullptr, 0);
     if (m_zhandle == nullptr){
-        KrpcLogger::Error("zookeeper_init error");
+        //KrpcLogger::Error("zookeeper_init error");
+        LOG(ERROR) << "zookeeper_init error!";
         exit(EXIT_FAILURE);
     }
 
@@ -58,7 +60,8 @@ void ZkClient::Start()
      */
     std::unique_lock<std::mutex> lock(cv_mutex);
     cv.wait(lock, [](){return is_connected;});
-    KrpcLogger::Info("zookeeper_init success");
+    //KrpcLogger::Info("zookeeper_init success");
+    LOG(INFO) << "zookeeper_init success";
 }
 
 void ZkClient::Create(const char *path, const char *data, int datalen, int state)
@@ -70,11 +73,13 @@ void ZkClient::Create(const char *path, const char *data, int datalen, int state
     if (flag == ZNONODE){
         flag = zoo_create(m_zhandle, path, data, datalen, &ZOO_OPEN_ACL_UNSAFE, state, path_buffer, bufferlen);
         if (flag == ZOK){
-            KrpcLogger::Info(std::string("znode create succss...path: ") + path);
+            //KrpcLogger::Info(std::string("znode create succss...path: ") + path);
+            LOG(INFO) << "znode create succss...path: " << path;
         }
         else
         {
-            KrpcLogger::Error(std::string("znode create succss...path: ") + path);
+            //KrpcLogger::Error(std::string("znode create succss...path: ") + path);
+            LOG(ERROR) << "znode create failed...path: " << path;
             exit(EXIT_FAILURE);
         }
         
@@ -89,7 +94,8 @@ std::string ZkClient::GetData(const char *path)
     
     int flag = zoo_get(m_zhandle, path, 0, buf, &bufferlen, nullptr);
     if (flag != ZOK){
-        KrpcLogger::Error("zoo_get error");
+        //KrpcLogger::Error("zoo_get error");
+        LOG(ERROR) << "zoo_get error!";
         return "";
     }
     else

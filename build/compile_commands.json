@@ -33,5 +33,25 @@
   "directory": "/root/projects/MyRpcDemo/build",
   "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o src/CMakeFiles/krpc_core.dir/zookeeperutil.cc.o -c /root/projects/MyRpcDemo/src/zookeeperutil.cc",
   "file": "/root/projects/MyRpcDemo/src/zookeeperutil.cc"
+},
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o example/callee/CMakeFiles/server.dir/Kserver.cc.o -c /root/projects/MyRpcDemo/example/callee/Kserver.cc",
+  "file": "/root/projects/MyRpcDemo/example/callee/Kserver.cc"
+},
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o example/callee/CMakeFiles/server.dir/__/user.pb.cc.o -c /root/projects/MyRpcDemo/example/user.pb.cc",
+  "file": "/root/projects/MyRpcDemo/example/user.pb.cc"
+},
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o example/caller/CMakeFiles/client.dir/Kclient.cc.o -c /root/projects/MyRpcDemo/example/caller/Kclient.cc",
+  "file": "/root/projects/MyRpcDemo/example/caller/Kclient.cc"
+},
+{
+  "directory": "/root/projects/MyRpcDemo/build",
+  "command": "/usr/bin/g++ -I/root/projects/MyRpcDemo/src/include -g -std=c++11 -Wall -std=gnu++11 -o example/caller/CMakeFiles/client.dir/__/user.pb.cc.o -c /root/projects/MyRpcDemo/example/user.pb.cc",
+  "file": "/root/projects/MyRpcDemo/example/user.pb.cc"
 }
 ]

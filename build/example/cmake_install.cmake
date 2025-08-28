@@ -42,3 +42,10 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for each subdirectory.
+  include("/root/projects/MyRpcDemo/build/example/callee/cmake_install.cmake")
+  include("/root/projects/MyRpcDemo/build/example/caller/cmake_install.cmake")
+
+endif()
+

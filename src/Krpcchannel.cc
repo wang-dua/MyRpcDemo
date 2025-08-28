@@ -130,10 +130,10 @@ void KrpcChannel::CallMethod(const ::google::protobuf::MethodDescriptor * method
 bool KrpcChannel::newConnect(const char *ip, uint16_t port)
 {
     int clientfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (clientfd = -1)
+    if (clientfd == -1)
     {
         char errtxt[512] = {0};
-        std::cout << "socket error" << strerror_r(errno, errtxt, sizeof(errtxt)) << std::endl;
+        std::cout << "socket error: " << strerror_r(errno, errtxt, sizeof(errtxt)) << std::endl;
         LOG(ERROR) << "socket error: " << errtxt;
         return false;
     }
@@ -144,7 +144,7 @@ bool KrpcChannel::newConnect(const char *ip, uint16_t port)
     server_addr.sin_addr.s_addr = inet_addr(ip);
 
     int connfd = connect(clientfd, (sockaddr *)&server_addr, sizeof(server_addr));
-    if (connfd = -1)
+    if (connfd == -1)
     {
         close(clientfd);
         char errtxt[512] = {0};
@@ -174,7 +174,7 @@ std::string KrpcChannel::QueryServiceHost(ZkClient *zkclient, std::string servic
     }
 
     idx = host_data_1.find(":");
-    if (idx == std::string::npos){
+    if (idx == -1){
         LOG(ERROR) << method_path + " address is invalid!";
     }
 
